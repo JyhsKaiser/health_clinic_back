@@ -1,4 +1,4 @@
-package jyhs.health_clinic_back.entity;
+package entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
