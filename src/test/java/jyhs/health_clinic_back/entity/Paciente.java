@@ -1,0 +1,29 @@
+package jyhs.health_clinic_back.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Paciente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pacienteId;
+    private String nombre;
+    private String apellido;
+    private String telefono;
+    private String email;
+    private String sexo;
+    private String nacionalidad;
+    private String direccion;
+
+
+}
