@@ -1,4 +1,4 @@
-package jyhs.health_clinic_back.dao;
+package jyhs.health_clinic_back.repository;
 
 import jyhs.health_clinic_back.entity.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;

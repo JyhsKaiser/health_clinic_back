@@ -1,6 +1,6 @@
 package jyhs.health_clinic_back.services;
 
-import jyhs.health_clinic_back.dao.PacienteRepository;
+import jyhs.health_clinic_back.repository.PacienteRepository;
 import jyhs.health_clinic_back.entity.Paciente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

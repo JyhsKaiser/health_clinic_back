@@ -1,0 +1,76 @@
+# application.yml
+# Configuración unificada para Health Clinic Backend, utilizando perfiles de Spring.
+
+# --- Configuración Común para todos los perfiles ---
+spring:
+  application:
+    name: Health Clinic Back # Nombre de tu aplicación
+
+  # Configuración de Azure Key Vault (común, pero 'enabled' puede variar por perfil)
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          endpoint: ${AZURE_KEYVAULT_URL} # URL del Key Vault, típicamente una variable de entorno
+          enabled: false # IMPORTANTE: Para producción, esto debería ser 'true' si usas Key Vault para credenciales
+      profile:
+        tenant-id: a9e17f9e-90be-41d0-84eb-6a48ebe9fec0 # Tu Tenant ID de Azure
+
+  jpa:
+    show-sql: true # Muestra las sentencias SQL en la consola (útil para desarrollo y depuración)
+    properties:
+      hibernate:
+        format_sql: true # Formatea el SQL para mejor legibilidad
+
+# Nivel de logging para JDBC (útil para depuración de base de datos)
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+
+
+# ----------------------- Configuración Específica para el Perfil 'dev' --------------------------
+--- # Separador de documentos YAML para perfiles
+spring:
+  config:
+    activate:
+      on-profile: dev # Este bloque de configuración se activa cuando el perfil 'dev' está activo
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinic_db # URL de tu DB de desarrollo (ej. local)
+    username: root # Usuario de tu DB de desarrollo
+    password: 123456 # Contraseña de tu DB de desarrollo (¡cambia esto!)
+    driver-class-name: com.mysql.cj.jdbc.Driver # <-- ESPECÍFICO PARA MYSQL
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect # <-- ESPECÍFICO PARA MYSQL
+    hibernate:
+      ddl-auto: update # 'update' es útil en desarrollo para que Hibernate cree/actualice tablas automáticamente
+      # IMPORTANTE: NUNCA uses 'update' o 'create' en producción sin una estrategia de migración de DB.
+
+
+# -------------------------- Configuración Específica para el Perfil 'prod' --------------------------
+--- # Separador de documentos YAML para perfiles
+
+spring:
+  config:
+    activate:
+      on-profile: prod # Este bloque de configuración se activa cuando el perfil 'prod' está activo
+
+  datasource:
+    url: jdbc:sqlserver://yonhserver.database.windows.net:1433;databaseName=yonhdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=yonhserver.database.windows.net;loginTimeout=30; # URL de tu DB de Azure
+    username: ${user} # Usuario de tu DB de Azure (se espera que provenga de Key Vault o variable de entorno)
+    password: ${password} # Contraseña de tu DB de Azure (se espera que provenga de Key Vault o variable de entorno)
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver # <-- ESPECÍFICO PARA SQL SERVER
+
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect # <-- ESPECÍFICO PARA SQL SERVER
+    hibernate:
+      ddl-auto: none # Crucial para producción: Hibernate no modificará el esquema de la DB.
+      # Gestiona tus migraciones de DB en producción con herramientas como Flyway o Liquibase.
+
+  # En producción, si usas Key Vault para credenciales de DB, 'enabled' debería ser 'true'
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          enabled: true # Sobrescribe a 'true' para producción si las credenciales están en Key Vault (antes estaba en false)
