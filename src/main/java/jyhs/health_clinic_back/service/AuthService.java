@@ -7,10 +7,10 @@ import jyhs.health_clinic_back.controller.models.RegisterRequest;
 
 public interface AuthService {
     AuthResponse register (RegisterRequest request);
-    AuthResponse authenticate(AuthenticationRequest request);
+//    AuthResponse authenticate(AuthenticationRequest request);
 
 
 
-//    AuthResponse authenticate(AuthenticationRequest request, HttpServletResponse response);
+    String authenticate(AuthenticationRequest request, HttpServletResponse response);
 
 }

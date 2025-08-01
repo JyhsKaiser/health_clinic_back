@@ -81,8 +81,7 @@ public class AuthServiceImpl implements AuthService {
      * @throws org.springframework.security.core.AuthenticationException Si las credenciales son inválidas.
      */
     @Override
-    public AuthResponse authenticate(AuthenticationRequest request) {
-//    public AuthResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public String authenticate(AuthenticationRequest request, HttpServletResponse response) {
 
         try {
             // Intenta autenticar al usuario usando el AuthenticationManager.
@@ -113,15 +112,17 @@ public class AuthServiceImpl implements AuthService {
 
         var jwtToken = jwtService.generateToken(user); // Genera un token JWT para el usuario autenticado.
 
-//        cookieService.addHttpOnlyCookie("jwt", jwtToken, 7*24*60*60, response);
-//        Patient patient = patient
+        cookieService.addHttpOnlyCookie("jwt", jwtToken, 7*24*60*60, response);
+        Patient patient = patientRepository.findPatientsByPatientId(user.getPatientId());
 
         // Construye y retorna la respuesta de autenticación con el token JWT.
-        return AuthResponse
-                .builder()
-                .token(jwtToken)
-                .patientId(user.getPatientId())
-                .build();
+//        return AuthResponse
+//                .builder()
+//                .token(jwtToken)
+//                .patientId(user.getPatientId())
+//                .build();
+
+        return patient.getRole().toString();
 
     }
 
