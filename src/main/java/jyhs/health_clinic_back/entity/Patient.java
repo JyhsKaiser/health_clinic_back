@@ -35,6 +35,7 @@ public class Patient implements UserDetails {
     private String height;
     private String bloodType;
     private String password;
+    private Boolean enabled;
 
     @Enumerated(EnumType.STRING)
     @Column( name = "role")

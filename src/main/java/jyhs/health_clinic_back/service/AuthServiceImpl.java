@@ -1,5 +1,6 @@
 package jyhs.health_clinic_back.service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jyhs.health_clinic_back.entity.Patient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,6 +41,8 @@ public class AuthServiceImpl implements AuthService {
     // Es el punto de entrada para el proceso de autenticación de usuarios.
     private final AuthenticationManager authenticationManager;
 
+    private final CookieService cookieService;
+
     /**
      * Registra un nuevo usuario en la aplicación.
      * Construye un objeto {@link Patient} a partir de los datos de la solicitud de registro,
@@ -63,6 +66,7 @@ public class AuthServiceImpl implements AuthService {
         patientRepository.save(user);  // Guarda el nuevo objeto User en la base de datos.
         var jwtToken = jwtService.generateToken(user);  // Genera un token JWT para el usuario recién registrado.
 
+
         // Construye y retorna la respuesta de autenticación con el token JWT.
         return AuthResponse.builder().token(jwtToken).build();
     }
@@ -76,8 +80,9 @@ public class AuthServiceImpl implements AuthService {
      * @return Un objeto {@link AuthResponse} que contiene el token JWT para la sesión autenticada.
      * @throws org.springframework.security.core.AuthenticationException Si las credenciales son inválidas.
      */
-    @Override // Anotación: Indica que este método sobrescribe un método de la interfaz AuthService.
+    @Override
     public AuthResponse authenticate(AuthenticationRequest request) {
+//    public AuthResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
 
         try {
             // Intenta autenticar al usuario usando el AuthenticationManager.
@@ -107,6 +112,9 @@ public class AuthServiceImpl implements AuthService {
                 )); // Esto no debería pasar si authenticationManager tuvo éxito
 
         var jwtToken = jwtService.generateToken(user); // Genera un token JWT para el usuario autenticado.
+
+//        cookieService.addHttpOnlyCookie("jwt", jwtToken, 7*24*60*60, response);
+//        Patient patient = patient
 
         // Construye y retorna la respuesta de autenticación con el token JWT.
         return AuthResponse

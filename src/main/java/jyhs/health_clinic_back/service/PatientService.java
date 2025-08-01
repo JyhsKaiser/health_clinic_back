@@ -7,13 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class PacienteService {
+public interface PatientService {
 
-    @Autowired
-    private PatientRepository patientRepository;
-
-    public List<Patient> findAll() {
-        return patientRepository.findAll();
-    }
+    Patient getPatientById(Long id);
+    Patient patchPatientById(Patient patient);
 }

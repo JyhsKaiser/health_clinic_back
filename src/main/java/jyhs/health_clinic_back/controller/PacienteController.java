@@ -1,25 +1,36 @@
 package jyhs.health_clinic_back.controller;
 
 import jyhs.health_clinic_back.entity.Patient;
-import jyhs.health_clinic_back.service.PacienteService;
+import jyhs.health_clinic_back.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("/api/v1/patient")
 //@CrossOrigin(origins = "http://localhost:4200")
 public class PacienteController {
     @Autowired
-    PacienteService pacienteService;
+    PatientService patientService;
 
     @GetMapping
-    public List<Patient> getAllPacientes() {
-//        System.out.println("hola");
-        return pacienteService.findAll();
+    public ResponseEntity<Patient> getPatientById(@RequestParam Long id) {
+        Patient patient = patientService.getPatientById(id);
+        if (patient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(patient);
+    }
+
+    @PatchMapping
+    public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient) {
+        Patient patientUpdate = patientService.patchPatientById(patient);
+        if (patientUpdate == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(patientUpdate);
     }
 
 }
