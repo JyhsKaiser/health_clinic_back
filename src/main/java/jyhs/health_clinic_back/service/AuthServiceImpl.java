@@ -68,7 +68,12 @@ public class AuthServiceImpl implements AuthService {
 
 
         // Construye y retorna la respuesta de autenticación con el token JWT.
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse
+                .builder()
+                .message("Registro exitoso")
+                .patientId(user.getPatientId())
+                .build();
+//        return AuthResponse.builder().token(jwtToken).build();
     }
 
     /**
@@ -81,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
      * @throws org.springframework.security.core.AuthenticationException Si las credenciales son inválidas.
      */
     @Override
-    public String authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public AuthResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
 
         try {
             // Intenta autenticar al usuario usando el AuthenticationManager.
@@ -113,7 +118,7 @@ public class AuthServiceImpl implements AuthService {
         var jwtToken = jwtService.generateToken(user); // Genera un token JWT para el usuario autenticado.
 
         cookieService.addHttpOnlyCookie("jwt", jwtToken, 7*24*60*60, response);
-        Patient patient = patientRepository.findPatientsByPatientId(user.getPatientId());
+//        Patient patient = patientRepository.findPatientsByPatientId(user.getPatientId());
 
         // Construye y retorna la respuesta de autenticación con el token JWT.
 //        return AuthResponse
@@ -122,7 +127,12 @@ public class AuthServiceImpl implements AuthService {
 //                .patientId(user.getPatientId())
 //                .build();
 
-        return patient.getRole().toString();
+        // Puedes devolver un JSON sin el token, o simplemente un mensaje de éxito
+        return AuthResponse
+                .builder()
+                .message("Autenticación exitosa")
+                .patientId(user.getPatientId())
+                .build();
 
     }
 

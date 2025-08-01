@@ -9,11 +9,12 @@ public class CookieService {
 
     public void addHttpOnlyCookie(String name, String value, int maxAge, HttpServletResponse response) {
         Cookie cookie = new Cookie(name, value);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
+        cookie.setHttpOnly(true); // Hace la cookie inaccesible para JavaScript
+        cookie.setSecure(true); // Solo se envía a través de HTTPS
+        cookie.setPath("/"); // La cookie está disponible para toda la aplicación
+        cookie.setMaxAge(maxAge); // Duración de la cookie
+        response.addCookie(cookie); // Agrega la cookie a la respuesta HTTP
+
     }
 
     public void deleteCookie(String name, HttpServletResponse response) {

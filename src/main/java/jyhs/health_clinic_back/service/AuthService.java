@@ -11,6 +11,6 @@ public interface AuthService {
 
 
 
-    String authenticate(AuthenticationRequest request, HttpServletResponse response);
+    AuthResponse authenticate(AuthenticationRequest request, HttpServletResponse response);
 
 }

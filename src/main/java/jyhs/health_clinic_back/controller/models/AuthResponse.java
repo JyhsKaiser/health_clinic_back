@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AuthResponse {
     private Long patientId;
-    private String token;
+//    private String token;
+    private String message;
 }

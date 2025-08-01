@@ -3,6 +3,7 @@ package jyhs.health_clinic_back.service;
 import jyhs.health_clinic_back.entity.Patient;
 import jyhs.health_clinic_back.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -60,4 +61,5 @@ public class PatientServiceImpl implements PatientService {
         return null;
 
     }
+
 }
