@@ -24,24 +24,31 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
         try {
-            authService.register(request);
-            return ResponseEntity.ok(new AuthResponse(null ,"Registrado"));
+//            authService.register(request);
+            return ResponseEntity.ok(authService.authenticate(request));
         }catch (Exception e){
-            return ResponseEntity.ok(new AuthResponse(null, e.getMessage()));
+            return ResponseEntity.badRequest().build();
         }
 
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthenticationRequest request, HttpServletResponse response){
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request, HttpServletResponse response){
         try {
 
             return ResponseEntity.ok(authService.authenticate(request, response));
         }catch (Exception e){
-            return ResponseEntity.ok(new AuthResponse(null,e.getMessage()));
+            return ResponseEntity.badRequest().build();
         }
 
     }
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthenticationRequest request){
+//        return ResponseEntity.ok(authService.authenticate(request));
+//    }
+
+
+
 
     // --- Nuevo método de logout ---
 //    @PostMapping("/logout")
