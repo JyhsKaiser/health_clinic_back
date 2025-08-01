@@ -2,7 +2,6 @@ package jyhs.health_clinic_back.controller;
 
 
 import jakarta.servlet.http.HttpServletResponse;
-import jyhs.health_clinic_back.entity.ApiMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,30 +22,24 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
-        try {
-//            authService.register(request);
-            return ResponseEntity.ok(authService.authenticate(request));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(authService.register(request));
+
 
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request, HttpServletResponse response){
-        try {
-
-            return ResponseEntity.ok(authService.authenticate(request, response));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
+        return ResponseEntity.ok(authService.authenticate(request, response));
     }
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
+//        return ResponseEntity.ok(authService.register(request));
+//    }
+//
 //    @PostMapping("/authenticate")
 //    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthenticationRequest request){
 //        return ResponseEntity.ok(authService.authenticate(request));
 //    }
-
 
 
 
