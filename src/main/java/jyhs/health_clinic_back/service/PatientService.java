@@ -10,5 +10,5 @@ import java.util.List;
 public interface PatientService {
 
     Patient getPatientById(Long id);
-    Patient patchPatientById(Patient patient);
+    Patient patchPatientByBody(Patient patient);
 }

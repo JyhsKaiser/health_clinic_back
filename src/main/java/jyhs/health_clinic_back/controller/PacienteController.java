@@ -25,8 +25,8 @@ public class PacienteController {
     }
 
     @PatchMapping
-    public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient) {
-        Patient patientUpdate = patientService.patchPatientById(patient);
+    public ResponseEntity<Patient> patchPatient(@RequestBody Patient patient) {
+        Patient patientUpdate = patientService.patchPatientByBody(patient);
         if (patientUpdate == null) {
             return ResponseEntity.notFound().build();
         }

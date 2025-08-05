@@ -45,7 +45,7 @@ public class SecurityConfig {
     public String[] publicEndpoints() {
         return new String[]{
                 "/api/v1/auth/**",
-                "/api/v1/patient/**",
+//                "/api/v1/patient/**",
                 // Agrega aquí cualquier otra ruta pública que no requiera autenticación
                 // Por ejemplo, si tienes una ruta para verificar el estado de la API:
                 // "/api/status/**"
@@ -113,7 +113,7 @@ public class SecurityConfig {
         ));
         // Define los métodos HTTP que están permitidos para las solicitudes de origen cruzado.
         // "OPTIONS" es esencial para las solicitudes preflight de CORS.
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         // Define las cabeceras que están permitidas en las solicitudes de origen cruzado.
         // "*" permite todas las cabeceras, pero puedes ser más específico si lo necesitas.
         configuration.setAllowedHeaders(Arrays.asList("*"));

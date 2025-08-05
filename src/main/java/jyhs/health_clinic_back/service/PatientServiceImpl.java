@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient patchPatientById(Patient patient)
+    public Patient patchPatientByBody(Patient patient)
     {
         Optional<Patient> existingPatient = patientRepository.findById(patient.getPatientId());
         if (existingPatient.isPresent() && existingPatient.get().getEnabled() == null)
